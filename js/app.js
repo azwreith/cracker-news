@@ -1,16 +1,26 @@
 var app = angular.module('crapperNews', []);
 
+app.factory('posts', function() {
+  var p = {
+    posts[]
+  };
+  return p;
+})
+
+
 app.controller('MainCtrl', [
   '$scope',
-  function($scope) {
+  '$posts'
+  function($scope, posts) {
 
-    $scope.posts = [
-      {title: 'post 1', upvotes: 5},
-      {title: 'post 2', upvotes: 1},
-      {title: 'post 3', upvotes: 25},
-      {title: 'post 4', upvotes: 9},
-      {title: 'post 5', upvotes: 4}
-    ];
+    $scope.posts = posts.posts;
+    // $scope.posts = [
+    //   {title: 'post 1', upvotes: 5},
+    //   {title: 'post 2', upvotes: 1},
+    //   {title: 'post 3', upvotes: 25},
+    //   {title: 'post 4', upvotes: 9},
+    //   {title: 'post 5', upvotes: 4}
+    // ];
 
     $scope.addPost = function() {
       // if($scope.title) {
