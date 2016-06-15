@@ -1,16 +1,33 @@
-var app = angular.module('crapperNews', []);
+var app = angular.module('crapperNews', ['ui.router']);
 
-app.factory('posts', function() {
+app.config([
+  '$stateProvider',
+  '$urlRouterProvider',
+  function($stateProvider, $urlRouterProvider) {
+
+    $stateProvider
+    .state('home', {
+      url: '/home',
+      templateUrl: '/home.html',
+      controller: 'MainCtrl'
+    });
+
+    $urlRouterProvider.otherwise('home');
+
+  }
+]);
+
+app.factory('posts', [function() {
   var p = {
-    posts[]
+    posts: []
   };
   return p;
-})
+}]);
 
 
 app.controller('MainCtrl', [
   '$scope',
-  '$posts'
+  'posts',
   function($scope, posts) {
 
     $scope.posts = posts.posts;
