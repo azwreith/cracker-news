@@ -42,7 +42,7 @@
         </span>
       </div>
 
-      <form role="form" class="story-form" ng-submit="addPost()">
+      <form role="form" class="form" ng-submit="addPost()">
         <h3>Add a new story</h3>
         <div class="form-group">
           <input type="text" class="form-control" placeholder="Title" ng-model="title" required></input>
@@ -74,6 +74,14 @@
           {{comment.body}}
         </span>
       </div>
+
+      <form role="form" class="form" ng-submit="addComment()">
+        <h3>Add a new comment</h3>
+        <div class="form-group">
+          <input type="text" class="form-control" placeholder="Comment" ng-model="body" required></input>
+        </div>
+        <button class="btn btn-primary" type="submit">Post</button>
+      </form>
     </script>
 
   </body>

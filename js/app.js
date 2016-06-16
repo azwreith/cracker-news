@@ -42,19 +42,17 @@ function($scope, posts) {
   // ];
 
   $scope.addPost = function() {
-    // if($scope.title) {
       $scope.posts.push({
         title: $scope.title,
         link: $scope.link,
         upvotes: 0,
         comments: [
-          {author: 'Ujjwal', body: 'Me for president', upvotes: 92},
+          {author: 'Ujjwal', body: 'Me for president', upvotes: 2},
           {author: 'Blah', body: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec accumsan, sem at tempus tempor', upvotes:3}
         ]
       });
       $scope.title='';
       $scope.link='';
-    // }
   };
 
   $scope.incrementUpvotes = function(post) {
@@ -67,5 +65,19 @@ app.controller('PostsCtrl', [
 '$stateParams',
 'posts',
 function($scope, $stateParams, posts) {
-  $scope.post = posts.posts[$stateParams.id]
+  $scope.post = posts.posts[$stateParams.id];
+
+  $scope.addComment = function() {
+    $scope.post.comments.push({
+      body: $scope.body,
+      author: 'user',
+      upvotes: 0
+    });
+    $scope.body = '';
+  };
+
+  //Broken - FIX!
+  $scope.incrementUpvotes = function(comment) {
+    comment.upvotes +=1;
+  }
 }]);
