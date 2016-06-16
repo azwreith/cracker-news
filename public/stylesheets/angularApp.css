@@ -1,0 +1,21 @@
+.glyphicon-thumbs-up {
+  cursor: pointer;
+}
+
+.form {
+  margin-top: 30px;
+}
+
+.post-upvotes {
+  width: 20px;
+  display: inline-block;
+}
+
+.news-title, .comment-body {
+  font-size: 20px;
+  margin-left: 10px;
+}
+
+#comments-link {
+  font-size: 12px;
+}
