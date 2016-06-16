@@ -38,6 +38,7 @@
           <span ng-hide="post.link">
             {{post.title}}
           </span>
+          <a id="comments-link" href="#/posts/{{$index}}">Comments</a>
         </span>
       </div>
 
@@ -47,10 +48,32 @@
           <input type="text" class="form-control" placeholder="Title" ng-model="title" required></input>
         </div>
         <div class="form-group">
-          <input type="url" class="form-control" placeholder="Link" ng-model="link" required></input>
+          <input type="url" class="form-control" placeholder="Link" ng-model="link"></input>
         </div>
         <button class="btn btn-primary" type="submit">Post</button>
       </form>
+    </script>
+
+    <!--Posts Template-->
+    <script type="text/ng-template" id="/posts.html">
+      <div class="page-header">
+        <h3>
+          <a ng-show="post.link" href="{{post.link}}">
+            {{post.title}}
+          </a>
+          <span ng-hide="post.link">
+            {{post.title}}
+          </span>
+        <h3>
+      </div>
+
+      <div ng-repeat="comment in post.comments | orderBy:-'upvotes'">
+        <span class="glyphicon glyphicon-thumbs-up" ng-click="incrementUpvotes(comment)"></span>
+        {{comment.upvotes}} - by {{comment.author}}
+        <span class="comment-body">
+          {{comment.body}}
+        </span>
+      </div>
     </script>
 
   </body>

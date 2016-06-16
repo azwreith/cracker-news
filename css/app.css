@@ -11,7 +11,11 @@
   display: inline-block;
 }
 
-.news-title {
+.news-title, .comment-body {
   font-size: 20px;
   margin-left: 10px;
+}
+
+#comments-link {
+  font-size: 12px;
 }
