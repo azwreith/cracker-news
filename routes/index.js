@@ -35,8 +35,8 @@ router.param('post', function(req, res, next, id) {
 
     req.post = post;
     return next();
-  })
-})
+  });
+});
 
 /* GET particular post */
 router.get('/posts/:post', function(req, res) {
@@ -83,8 +83,8 @@ router.param('comment', function(req, res, next, id) {
     req.comment = comment;
 
     return next();
-  })
-})
+  });
+});
 
 router.put('/posts/:post/comments/:comment/upvote', function(req, res, next) {
   req.comment.upvote(function(err, comment) {
