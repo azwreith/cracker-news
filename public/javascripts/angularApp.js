@@ -9,11 +9,11 @@ app.config([
 				url: '/home',
 				templateUrl: '/home.html',
 				controller: 'MainCtrl',
-        resolve: {
-          postPromise: ['posts', function(posts) {
-            return posts.getAll();
-          }]
-        }
+				resolve: {
+					postPromise: ['posts', function(posts) {
+						return posts.getAll();
+					}]
+				}
 			})
 
 		.state('posts', {
@@ -31,17 +31,24 @@ app.factory('posts', ['$http', function($http) {
 		posts: []
 	};
 
-  p.getAll = function() {
-    return $http.get('/posts').success(function(data) {
-      angular.copy(data, p.posts);
-    });
-  };
+	p.getAll = function() {
+		return $http.get('/posts').success(function(data) {
+			angular.copy(data, p.posts);
+		});
+	};
 
-  p.create = function(post) {
-    return $http.post('/posts', post).success(function(data) {
-      p.posts.push(data);
-    });
-  };
+	p.create = function(post) {
+		return $http.post('/posts', post).success(function(data) {
+			p.posts.push(data);
+		});
+	};
+
+	p.upvote = function(post) {
+		return $http.put('/posts/' + post._id + '/upvote')
+			.success(function(data) {
+				post.upvotes += 1;
+			});
+	};
 
 	return p;
 }]);
@@ -53,16 +60,16 @@ app.controller('MainCtrl', [
 		$scope.posts = posts.posts;
 
 		$scope.addPost = function() {
-      posts.create({
-        title: $scope.title,
-        body: $scope.link
-      });
+			posts.create({
+				title: $scope.title,
+				body: $scope.link
+			});
 			$scope.title = '';
 			$scope.link = '';
 		};
 
 		$scope.incrementUpvotes = function(post) {
-			post.upvotes += 1;
+			posts.upvote(post);
 		};
 	}
 ]);
