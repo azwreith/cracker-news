@@ -19,7 +19,12 @@ app.config([
 		.state('posts', {
 			url: '/posts/:id',
 			templateUrl: '/posts.html',
-			controller: 'PostsCtrl'
+			controller: 'PostsCtrl',
+			resolve: {
+				post: ['$stateParams', 'posts', function($stateParams, posts) {
+					return posts.get($stateParams.id);
+				}]
+			}
 		});
 
 		$urlRouterProvider.otherwise('home');
@@ -50,6 +55,17 @@ app.factory('posts', ['$http', function($http) {
 			});
 	};
 
+	/* I can use success() here too instead of a promise */
+	p.get = function(id) {
+		return $http.get('/posts/' + id).then(function(res) {
+			return res.data;
+		});
+	};
+
+	p.addComment = function(id, comment) {
+		return $http.post('/posts/' + id + '/comments', comment);
+	};
+
 	return p;
 }]);
 
@@ -76,16 +92,17 @@ app.controller('MainCtrl', [
 
 app.controller('PostsCtrl', [
 	'$scope',
-	'$stateParams',
 	'posts',
-	function($scope, $stateParams, posts) {
-		$scope.post = posts.posts[$stateParams.id];
+	'post',
+	function($scope, posts, post) {
+		$scope.post = post;
 
 		$scope.addComment = function() {
-			$scope.post.comments.push({
+			posts.addComment(post._id, {
 				body: $scope.body,
-				author: 'user',
-				upvotes: 0
+				author: 'user'
+			}).success(function(comment) {
+				$scope.post.comments.push(comment);
 			});
 			$scope.body = '';
 		};
