@@ -20,9 +20,14 @@ function($stateProvider, $urlRouterProvider) {
   $urlRouterProvider.otherwise('home');
 }]);
 
-app.factory('posts', [function() {
+app.factory('posts', ['$http', function() {
   var p = {
     posts: []
+  };
+  p.getall = function() {
+    return $http.get("/posts").success(function(data) {
+      angular.copy(data, p.posts);
+    });
   };
   return p;
 }]);
@@ -33,13 +38,6 @@ app.controller('MainCtrl', [
 'posts',
 function($scope, posts) {
   $scope.posts = posts.posts;
-  // $scope.posts = [
-  //   {title: 'post 1', upvotes: 5},
-  //   {title: 'post 2', upvotes: 1},
-  //   {title: 'post 3', upvotes: 25},
-  //   {title: 'post 4', upvotes: 9},
-  //   {title: 'post 5', upvotes: 4}
-  // ];
 
   $scope.addPost = function() {
       $scope.posts.push({
@@ -57,7 +55,7 @@ function($scope, posts) {
 
   $scope.incrementUpvotes = function(post) {
     post.upvotes += 1;
-  }
+  };
 }]);
 
 app.controller('PostsCtrl', [
@@ -79,5 +77,5 @@ function($scope, $stateParams, posts) {
   //Broken - FIX!
   $scope.incrementUpvotes = function(comment) {
     comment.upvotes +=1;
-  }
+  };
 }]);
