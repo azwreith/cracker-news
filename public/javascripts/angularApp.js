@@ -37,7 +37,9 @@ app.factory('posts', ['$http', function($http) {
     });
   };
 
+  p.create = function(post) {
     return $http.post('/posts', post).success(function(data) {
+      p.posts.push(data);
     });
   };
 
