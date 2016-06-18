@@ -30,11 +30,17 @@ app.factory('posts', ['$http', function($http) {
 	var p = {
 		posts: []
 	};
+
   p.getAll = function() {
     return $http.get('/posts').success(function(data) {
       angular.copy(data, p.posts);
     });
   };
+
+    return $http.post('/posts', post).success(function(data) {
+    });
+  };
+
 	return p;
 }]);
 
@@ -45,20 +51,10 @@ app.controller('MainCtrl', [
 		$scope.posts = posts.posts;
 
 		$scope.addPost = function() {
-			$scope.posts.push({
-				title: $scope.title,
-				link: $scope.link,
-				upvotes: 0,
-				comments: [{
-					author: 'Ujjwal',
-					body: 'Me for president',
-					upvotes: 2
-				}, {
-					author: 'Blah',
-					body: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec accumsan, sem at tempus tempor',
-					upvotes: 3
-				}]
-			});
+      posts.create({
+        title: $scope.title,
+        body: $scope.link
+      });
 			$scope.title = '';
 			$scope.link = '';
 		};
