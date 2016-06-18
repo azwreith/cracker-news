@@ -10,8 +10,8 @@ app.config([
 				templateUrl: '/home.html',
 				controller: 'MainCtrl',
         resolve: {
-          postPromise: ['post', function(posts) {
-            return post.getall();
+          postPromise: ['posts', function(posts) {
+            return posts.getAll();
           }]
         }
 			})
@@ -26,18 +26,17 @@ app.config([
 	}
 ]);
 
-app.factory('posts', ['$http', function() {
+app.factory('posts', ['$http', function($http) {
 	var p = {
 		posts: []
 	};
-	p.getall = function() {
-		return $http.get("/posts").success(function(data) {
-			angular.copy(data, p.posts);
-		});
-	};
+  p.getAll = function() {
+    return $http.get('/posts').success(function(data) {
+      angular.copy(data, p.posts);
+    });
+  };
 	return p;
 }]);
-
 
 app.controller('MainCtrl', [
 	'$scope',
