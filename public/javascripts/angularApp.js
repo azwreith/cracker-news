@@ -68,6 +68,13 @@ app.factory('posts', ['$http', function($http) {
     });
 	};
 
+  p.upvoteComment = function(post, comment) {
+    return $http.put('/posts/' + post._id + '/comments/' + comment._id + '/upvote').success(function(data) {
+      comment.upvotes += 1;
+    });
+  };
+
+
 	return p;
 }]);
 
@@ -107,9 +114,8 @@ app.controller('PostsCtrl', [
 			$scope.body = '';
 		};
 
-		//Broken - FIX!
 		$scope.incrementUpvotes = function(comment) {
-			comment.upvotes += 1;
+			posts.upvoteComment(post, comment);
 		};
 	}
 ]);
