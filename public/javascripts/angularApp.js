@@ -25,6 +25,28 @@ app.config([
 					return posts.get($stateParams.id);
 				}]
 			}
+		})
+
+		.state('register', {
+			url: '/register',
+			templateUrl: '/register.html',
+			controller: 'AuthCtrl',
+			onEnter: ['$state', 'auth', function($state, auth) {
+				if(auth.isLoggedIn()) {
+					$state.go('home');
+				}
+			}]
+		})
+
+		.state('login', {
+			url: '/login',
+			templateUrl: '/login.html',
+			controller: 'AuthCtrl',
+			onEnter: ['$state', 'auth', function($state, auth) {
+				if(auth.isLoggedIn()) {
+					$state.go('home');
+				}
+			}]
 		});
 
 		$urlRouterProvider.otherwise('home');
@@ -151,7 +173,8 @@ app.controller('AuthCtrl', [
 				$state.go('home');
 			});
 		};
-}]);
+	}
+]);
 
 app.controller('MainCtrl', [
 	'$scope',
