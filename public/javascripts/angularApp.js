@@ -31,6 +31,57 @@ app.config([
 	}
 ]);
 
+app.factory('auth', ['$http', '$window', function($http, $window) {
+	var auth = {};
+
+	auth.saveToken = function(token) {
+		$window.localStorage['crapper-news-token'] = token;
+	};
+
+	auth.getToken = function() {
+		return $window.localStorage['crapper-news-token'];
+	};
+
+	auth.isLoggedIn = function() {
+		var token = auth.getToken();
+
+		if(token) {
+			var payload = JSON.parse($window.atob(token.split('.')[1]));
+
+			return payload.exp > Date.now() / 1000;
+		} else {
+			return false;
+		}
+	};
+
+	auth.currentUser = function() {
+		if(auth.isLoggedIn()) {
+			var token = auth.getToken();
+
+			var payload = JSON.parse($window.atob(token.split('.')[1]));
+			return payload.username;
+		}
+	};
+
+	auth.register = function(user) {
+		return $http.post('/register', user).success(function(data) {
+			auth.saveToken(data.token);
+		});
+	};
+
+	auth.logIn = function(user) {
+		return $http.post('/login', user).success(function(data) {
+			auth.saveToken(data.token);
+		});
+	};
+
+	auth.logOut = function() {
+		$window.localStorage.removeItem('crapper-news-token');
+	};
+
+	return auth;
+}]);
+
 app.factory('posts', ['$http', function($http) {
 	var p = {
 		posts: []
@@ -64,15 +115,15 @@ app.factory('posts', ['$http', function($http) {
 
 	p.addComment = function(post, comment) {
 		return $http.post('/posts/' + post._id + '/comments', comment).success(function(comment) {
-      post.comments.push(comment);
-    });
+			post.comments.push(comment);
+		});
 	};
 
-  p.upvoteComment = function(post, comment) {
-    return $http.put('/posts/' + post._id + '/comments/' + comment._id + '/upvote').success(function(data) {
-      comment.upvotes += 1;
-    });
-  };
+	p.upvoteComment = function(post, comment) {
+		return $http.put('/posts/' + post._id + '/comments/' + comment._id + '/upvote').success(function(data) {
+			comment.upvotes += 1;
+		});
+	};
 
 
 	return p;
