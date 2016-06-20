@@ -21,6 +21,27 @@
     </div>
   </div>
 
+  <!--Register Template-->
+  <script type="text/ng-template" id="/register.html">
+    <div class="page-header">
+      <h1>Crapper News</h1>
+    </div>
+
+    <div ng-show="error" class="alert alert-danger row">
+      <span>{{error.message}}</span>
+    </div>
+
+    <form role="form" class="form" ng-submit="register()">
+      <div class="form-group">
+        <input type="text" class="form-control" placeholder="Username" ng-model="user.username" required />
+      </div>
+      <div class="form-group">
+        <input type="password" class="form-control" placeholder="Password" ng-model="user.password" required />
+      </div>
+      <button type="submit" class="btn btn-primary">Register</button>
+    </form>
+  </script>
+
   <!--Home Template-->
   <script type="text/ng-template" id="/home.html">
     <div class="page-header">
@@ -46,10 +67,10 @@
     <form role="form" class="form" ng-submit="addPost()">
       <h3>Add a new story</h3>
       <div class="form-group">
-        <input type="text" class="form-control" placeholder="Title" ng-model="title" required></input>
+        <input type="text" class="form-control" placeholder="Title" ng-model="title" required />
       </div>
       <div class="form-group">
-        <input type="url" class="form-control" placeholder="Link" ng-model="link"></input>
+        <input type="url" class="form-control" placeholder="Link" ng-model="link" />
       </div>
       <button class="btn btn-primary" type="submit">Post</button>
     </form>
@@ -79,7 +100,7 @@
       <form role="form" class="form" ng-submit="addComment()">
         <h3>Add a new comment</h3>
       <div class="form-group">
-        <input type="text" class="form-control" placeholder="Comment" ng-model="body" required></input>
+        <input type="text" class="form-control" placeholder="Comment" ng-model="body" required />
       </div>
       <button class="btn btn-primary" type="submit">Post</button>
       </form>
