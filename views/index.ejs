@@ -2,7 +2,7 @@
 <html>
 
 <head>
-  <title>Crapper News</title>
+  <title>Cracker News</title>
   <link href="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" rel="stylesheet">
   <link href="/stylesheets/angularApp.css" rel="stylesheet">
 
@@ -11,7 +11,7 @@
   <script src="/javascripts/angularApp.js"></script>
 </head>
 
-<body ng-app="crapperNews">
+<body ng-app="crackerNews">
 
   <!--Backbone Structure-->
   <div class="container">
@@ -34,7 +34,7 @@
   <!--Register Template-->
   <script type="text/ng-template" id="/register.html">
     <div class="page-header">
-      <h1>Crapper News</h1>
+      <h1>Cracker News</h1>
     </div>
 
     <div ng-show="error" class="alert alert-danger row">
@@ -55,7 +55,7 @@
   <!--Login Template-->
   <script type="text/ng-template" id="/login.html">
     <div class="page-header">
-      <h1>Crapper News</h1>
+      <h1>Cracker News</h1>
     </div>
 
     <div ng-show="error" class="alert alert-danger row">
@@ -76,7 +76,7 @@
   <!--Home Template-->
   <script type="text/ng-template" id="/home.html">
     <div class="page-header">
-      <h1>Crapper News</h1>
+      <h1>Cracker News</h1>
     </div>
 
     <div ng-repeat="post in posts | orderBy:'-upvotes'">
