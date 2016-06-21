@@ -104,7 +104,7 @@ app.factory('auth', ['$http', '$window', function($http, $window) {
 	return auth;
 }]);
 
-app.factory('posts', ['$http', function($http) {
+app.factory('posts', ['$http', 'auth', function($http, auth) {
 	var p = {
 		posts: []
 	};
@@ -116,16 +116,23 @@ app.factory('posts', ['$http', function($http) {
 	};
 
 	p.create = function(post) {
-		return $http.post('/posts', post).success(function(data) {
+		return $http.post('/posts', post, {
+			headers: {
+				Authorization: 'Bearer' + auth.getToken()
+			}
+		}).success(function(data) {
 			p.posts.push(data);
 		});
 	};
 
 	p.upvote = function(post) {
-		return $http.put('/posts/' + post._id + '/upvote')
-			.success(function(data) {
-				post.upvotes += 1;
-			});
+		return $http.put('/posts/' + post._id + '/upvote', null, {
+			headers: {
+				Authorization: 'Bearer' + auth.getToken()
+			}
+		}).success(function(data) {
+			post.upvotes += 1;
+		});
 	};
 
 	/* I can use success() here too instead of a promise */
@@ -136,13 +143,21 @@ app.factory('posts', ['$http', function($http) {
 	};
 
 	p.addComment = function(post, comment) {
-		return $http.post('/posts/' + post._id + '/comments', comment).success(function(comment) {
+		return $http.post('/posts/' + post._id + '/comments', comment, {
+			headers: {
+				Authorization: 'Bearer' + auth.getToken()
+			}
+		}).success(function(comment) {
 			post.comments.push(comment);
 		});
 	};
 
 	p.upvoteComment = function(post, comment) {
-		return $http.put('/posts/' + post._id + '/comments/' + comment._id + '/upvote').success(function(data) {
+		return $http.put('/posts/' + post._id + '/comments/' + comment._id + '/upvote', null,  {
+			headers: {
+				Authorization: 'Bearer' + auth.getToken()
+			}
+		}).success(function(data) {
 			comment.upvotes += 1;
 		});
 	};
