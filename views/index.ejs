@@ -17,6 +17,7 @@
   <div class="container-fluid">
     <nav class="navbar navbar-default pull-right" ng-controller="NavCtrl">
       <ul class="nav navbar-nav">
+        <li><a href="/#/home">Home</a></li>
         <li ng-show="isLoggedIn()"><a>{{currentUser()}}</a></li>
         <li ng-show="isLoggedIn()"><a href="" ng-click="logOut()">Log Out</a></li>
         <li ng-hide="isLoggedIn()"><a href="/#/login">Log In</a></li>
@@ -68,7 +69,7 @@
       <div class="form-group">
         <input type="password" class="form-control" placeholder="Password" ng-model="user.password" required />
       </div>
-      <button type="submit" class="btn btn-primary">Register</button>
+      <button type="submit" class="btn btn-primary">Log In</button>
     </form>
   </script>
 
@@ -90,7 +91,7 @@
           <span ng-hide="post.link">
             {{post.title}}
           </span>
-      <a id="comments-link" href="#/posts/{{post._id}}">Comments</a>
+      <a class="small-text" href="#/posts/{{post._id}}">Comments</a>
       </span>
     </div>
 
@@ -116,12 +117,15 @@
           <span ng-hide="post.link">
             {{post.title}}
           </span>
+          <span class="small-text" ng-show="post.author">
+            posted by <a>{{post.author}}</a>
+          </span>
         <h3>
       </div>
 
       <div ng-repeat="comment in post.comments | orderBy:-'upvotes'">
         <span class="glyphicon glyphicon-thumbs-up" ng-click="incrementUpvotes(comment)"></span>
-        {{comment.upvotes}} - by {{comment.author}}
+        {{comment.upvotes}} - by <a>{{comment.author}}</a>
         <span class="comment-body">
           {{comment.body}}
         </span>

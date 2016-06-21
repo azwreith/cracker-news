@@ -118,7 +118,7 @@ app.factory('posts', ['$http', 'auth', function($http, auth) {
 	p.create = function(post) {
 		return $http.post('/posts', post, {
 			headers: {
-				Authorization: 'Bearer' + auth.getToken()
+				Authorization: 'Bearer ' + auth.getToken()
 			}
 		}).success(function(data) {
 			p.posts.push(data);
@@ -128,7 +128,7 @@ app.factory('posts', ['$http', 'auth', function($http, auth) {
 	p.upvote = function(post) {
 		return $http.put('/posts/' + post._id + '/upvote', null, {
 			headers: {
-				Authorization: 'Bearer' + auth.getToken()
+				Authorization: 'Bearer ' + auth.getToken()
 			}
 		}).success(function(data) {
 			post.upvotes += 1;
@@ -145,7 +145,7 @@ app.factory('posts', ['$http', 'auth', function($http, auth) {
 	p.addComment = function(post, comment) {
 		return $http.post('/posts/' + post._id + '/comments', comment, {
 			headers: {
-				Authorization: 'Bearer' + auth.getToken()
+				Authorization: 'Bearer ' + auth.getToken()
 			}
 		}).success(function(comment) {
 			post.comments.push(comment);
@@ -155,7 +155,7 @@ app.factory('posts', ['$http', 'auth', function($http, auth) {
 	p.upvoteComment = function(post, comment) {
 		return $http.put('/posts/' + post._id + '/comments/' + comment._id + '/upvote', null,  {
 			headers: {
-				Authorization: 'Bearer' + auth.getToken()
+				Authorization: 'Bearer ' + auth.getToken()
 			}
 		}).success(function(data) {
 			comment.upvotes += 1;
