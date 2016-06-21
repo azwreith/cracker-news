@@ -1,4 +1,4 @@
-var app = angular.module('crapperNews', ['ui.router']);
+var app = angular.module('crackerNews', ['ui.router']);
 
 app.config([
 	'$stateProvider',
@@ -57,11 +57,11 @@ app.factory('auth', ['$http', '$window', function($http, $window) {
 	var auth = {};
 
 	auth.saveToken = function(token) {
-		$window.localStorage['crapper-news-token'] = token;
+		$window.localStorage['cracker-news-token'] = token;
 	};
 
 	auth.getToken = function() {
-		return $window.localStorage['crapper-news-token'];
+		return $window.localStorage['cracker-news-token'];
 	};
 
 	auth.isLoggedIn = function() {
@@ -98,7 +98,7 @@ app.factory('auth', ['$http', '$window', function($http, $window) {
 	};
 
 	auth.logOut = function() {
-		$window.localStorage.removeItem('crapper-news-token');
+		$window.localStorage.removeItem('cracker-news-token');
 	};
 
 	return auth;
